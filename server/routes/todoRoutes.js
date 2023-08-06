@@ -15,3 +15,5 @@ router
   .get(protect, getTodos)
   .post(protect, createTodo);
 router.route("/:id").put(protect, updateTodo).delete(protect, deleteTodo);
+
+module.exports = router;

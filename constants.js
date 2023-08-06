@@ -1,5 +1,5 @@
 const constants = module.exports;
-const path = require(path);
+const path = require("path");
 
 constants.paths = {
   baseDir: __dirname,
