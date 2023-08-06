@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5002;
-
+app.use(express.urlencoded({ extended: false }));
 app.use("/api/user", require("./server/routes/userRoutes"));
 app.use("/api/todo", require("./server/routes/todoRoutes"));
 

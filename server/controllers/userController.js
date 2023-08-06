@@ -3,7 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { logger } = require("../utilities");
-const { error } = logger;
+const { error, log } = logger;
 
 const registerUser = asyncHandler(async (req, res) => {
   try {
@@ -61,6 +61,30 @@ const loginUser = asyncHandler(async (req, res) => {
       res.status(401);
       throw new Error("Invalid email or password");
     }
+  } catch (err) {
+    error(err);
+  }
+});
+
+const uploadAvatar = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const { path } = req.file;
+
+    if (!user) {
+      res.status(401);
+      throw new Error("User not found");
+    }
+    if (!path) {
+      res.status(401);
+      throw new Error("Invalid image");
+    }
+
+    const updatedAvatar = await user.save({
+      avatar: path,
+    });
+
+    res.status(200).json(updatedAvatar);
   } catch (err) {
     error(err);
   }
@@ -136,6 +160,7 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  uploadAvatar,
   getUser,
   updateUser,
   deleteUser,
