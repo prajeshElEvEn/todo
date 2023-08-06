@@ -15,7 +15,7 @@ const success = (message) => {
   console.log(`${time} ${pre} ${message}`);
 };
 
-const err = (message) => {
+const error = (message) => {
   var time = formatTime();
   var pre = chalk.bgRed.bold("[ERROR]");
   message = chalk.red(message);
@@ -32,6 +32,6 @@ const warn = (message) => {
 module.exports = {
   log,
   success,
-  err,
+  error,
   warn,
 };

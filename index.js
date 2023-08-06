@@ -1,12 +1,13 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv");
 const { logger, db } = require("./server/utilities");
 const { success } = logger;
-db();
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5002;
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await db();
   success(`Server running on port ${port}`);
 });
