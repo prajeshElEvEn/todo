@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 5002;
 
 app.use("/api/user", require("./server/routes/userRoutes"));
+app.use("/api/todo", require("./server/routes/todoRoutes"));
 
 app.use(errorHandler);
 

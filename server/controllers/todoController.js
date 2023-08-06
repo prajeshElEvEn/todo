@@ -25,12 +25,13 @@ const createTodo = asyncHandler(async (req, res) => {
   try {
     const { title, description } = req.body;
     if (!title || !description) {
+      res.status(400);
       throw new Error("Fields are empty");
     }
 
     const todo = await Todo.create({
-      title: title,
-      description: description,
+      title,
+      description,
     });
 
     res.status(201).json(todo);
