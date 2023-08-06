@@ -1,4 +1,12 @@
 const express = require("express");
+const { protect } = require("../middlewares/authMiddleware");
+const {
+  getAllTodos,
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} = require("../controllers/todoController");
 const router = express.Router();
 
 router
