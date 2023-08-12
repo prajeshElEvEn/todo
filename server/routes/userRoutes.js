@@ -23,9 +23,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.route("/profile").get(protect, getUser);
 router
-  .route("/profile")
-  .get(protect, getUser)
+  .route("/profile/:id")
   .post(protect, upload.single("avatar"), uploadAvatar)
   .put(protect, updateUser)
   .delete(protect, deleteUser);

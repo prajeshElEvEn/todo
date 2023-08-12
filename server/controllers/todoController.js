@@ -32,6 +32,7 @@ const createTodo = asyncHandler(async (req, res) => {
     const todo = await Todo.create({
       title,
       description,
+      user: req.user.id,
     });
 
     res.status(201).json(todo);
@@ -76,7 +77,7 @@ const deleteTodo = asyncHandler(async (req, res) => {
     }
     if (!req.user) {
       res.status(401);
-      throw new Error("Todo not found");
+      throw new Error("User not found");
     }
 
     if (todo.user.toString() !== req.user.id) {
