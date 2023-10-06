@@ -1,7 +1,3 @@
 # ToDo
 
-- [ ] server
-- [ ] routes
-- [ ] middlewares
-- [ ] controllers
-- [ ] models
+Todo app
