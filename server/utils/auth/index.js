@@ -35,7 +35,7 @@ const sendResetEmail = async (email, resetToken) => {
     from: { name: FROM_NAME, email: FROM_EMAIL },
     to: email,
     subject: "Password Reset Request",
-    html: `<p>Hey there,</p><p>You requested to change your password.</p><p>Token: ${resetToken} </p><p>Use this token to reset your password.<p/><p>Regards,</p><p>DAM</p>`,
+    html: `<p>Hey there,</p><p>You requested to change your password.</p><p>Token: ${resetToken} </p><p>Use this token to reset your password.<p/>`,
   };
 
   try {

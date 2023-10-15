@@ -1,5 +1,5 @@
 const multer = require("multer");
-const { avatarStorage } = require("./multerStorage");
+const { avatarStorage } = require("./storage");
 
 const uploadAvatar = multer({
   storage: avatarStorage,
