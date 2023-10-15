@@ -1,0 +1,8 @@
+# dirs
+node_modules
+
+# files
+package-lock.json
+.env.production
+.env.development
+
