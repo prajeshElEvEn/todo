@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Form } from "../../components/styled";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   IconButton,
@@ -13,6 +14,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "../../assets/icons";
 import { registerValidation } from "../../components/utils";
+import { register } from "../../features/auth/authSlice";
 
 const initialValues = {
   firstName: "",
@@ -22,11 +24,8 @@ const initialValues = {
   confirmPassword: "",
 };
 
-const onSubmit = (values) => {
-  console.log(values);
-};
-
 const RegisterPage = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -44,7 +43,10 @@ const RegisterPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: registerValidation,
-    onSubmit,
+    onSubmit: (values) => {
+      console.log(values);
+      dispatch(register(values));
+    },
   });
 
   return (
