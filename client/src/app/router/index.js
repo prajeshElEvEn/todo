@@ -4,7 +4,13 @@ import {
   Route,
 } from "react-router-dom";
 import { AuthLayout, RootLayout } from "../../components/layouts";
-import { Dashboard, LoginPage, RegisterPage } from "../../pages";
+import {
+  Dashboard,
+  ForgotPage,
+  LoginPage,
+  RegisterPage,
+  ResetPage,
+} from "../../pages";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,6 +19,8 @@ export const router = createBrowserRouter(
       <Route path="auth" element={<AuthLayout />}>
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="forgot" element={<ForgotPage />} />
+        <Route path="reset" element={<ResetPage />} />
       </Route>
     </Route>
   )
