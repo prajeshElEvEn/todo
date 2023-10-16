@@ -9,9 +9,11 @@ const Dashboard = () => {
     <Stack>
       <Grid
         container
-        alignItems="center"
-        rowSpacing={1}
+        py={4}
+        direction={{ xs: "column", md: "row" }}
+        rowSpacing={{ xs: 4, md: 1 }}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        alignItems={"center"}
       >
         <Grid item xs={6}>
           <FormCard />
