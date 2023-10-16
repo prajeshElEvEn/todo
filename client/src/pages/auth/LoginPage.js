@@ -32,6 +32,7 @@ const LoginPage = () => {
       password: "",
     });
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <TextField
@@ -39,6 +40,7 @@ const LoginPage = () => {
         label="email id"
         value={formData.email}
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        fullWidth
       />
       <TextField
         type={showPassword ? "text" : "password"}
@@ -61,6 +63,7 @@ const LoginPage = () => {
         label="password"
         value={formData.password}
         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        fullWidth
       />
       <Stack direction={"row"} spacing={1}>
         <Link component={RouterLink} to="/auth/forgot">
@@ -71,7 +74,7 @@ const LoginPage = () => {
         login
       </Button>
       <Stack direction={"row"} spacing={1}>
-        <Typography>don't have an account?</Typography>
+        <Typography color="text.secondary">don't have an account?</Typography>
         <Link component={RouterLink} to="/auth/register">
           register
         </Link>

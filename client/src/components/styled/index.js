@@ -15,5 +15,6 @@ export const FileInput = styled("input")({
 export const Form = styled("form")({
   display: "flex",
   flexDirection: "column",
+  alignItems: "flex-start",
   gap: "1rem",
 });

@@ -48,7 +48,7 @@ const RegisterPage = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+      <Stack width={"100%"} direction={{ xs: "column", sm: "row" }} spacing={2}>
         <TextField
           type="text"
           label="first name"
@@ -73,6 +73,7 @@ const RegisterPage = () => {
         label="email id"
         value={formData.email}
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        fullWidth
       />
       <TextField
         type={showPassword ? "text" : "password"}
@@ -95,6 +96,7 @@ const RegisterPage = () => {
         label="password"
         value={formData.password}
         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        fullWidth
       />
       <TextField
         type={showConfirmPassword ? "text" : "password"}
@@ -119,12 +121,13 @@ const RegisterPage = () => {
         onChange={(e) =>
           setFormData({ ...formData, confirmPassword: e.target.value })
         }
+        fullWidth
       />
       <Button variant="contained" type="submit">
         register
       </Button>
       <Stack direction={"row"} spacing={1}>
-        <Typography>already have an account?</Typography>
+        <Typography color="text.secondary">already have an account?</Typography>
         <Link component={RouterLink} to="/auth/login">
           login
         </Link>
