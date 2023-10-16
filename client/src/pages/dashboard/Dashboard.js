@@ -10,7 +10,7 @@ const Dashboard = () => {
       <Grid
         container
         py={4}
-        direction={{ xs: "column", md: "row" }}
+        direction={{ xs: "column-reverse", md: "row" }}
         rowSpacing={{ xs: 4, md: 1 }}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         alignItems={"center"}

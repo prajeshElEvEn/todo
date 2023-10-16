@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Form } from "../../components/styled";
+import { useFormik } from "formik";
 import {
   Button,
   IconButton,
@@ -11,17 +12,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "../../assets/icons";
+import { registerValidation } from "../../components/utils";
+
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const onSubmit = (values) => {
+  console.log(values);
+};
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -34,49 +41,59 @@ const RegisterPage = () => {
     event.preventDefault();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema: registerValidation,
+    onSubmit,
+  });
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={formik.handleSubmit}>
       <Stack width={"100%"} direction={{ xs: "column", sm: "row" }} spacing={2}>
         <TextField
+          id="firstName"
+          name="firstName"
           type="text"
           label="first name"
           fullWidth
-          value={formData.firstName}
-          onChange={(e) =>
-            setFormData({ ...formData, firstName: e.target.value })
+          {...formik.getFieldProps("firstName")}
+          error={formik.touched.firstName && formik.errors.firstName}
+          helperText={
+            formik.touched.firstName && formik.errors.firstName
+              ? formik.errors.firstName
+              : null
           }
         />
         <TextField
+          id="lastName"
+          name="lastName"
           type="text"
           label="last name"
           fullWidth
-          value={formData.lastName}
-          onChange={(e) =>
-            setFormData({ ...formData, lastName: e.target.value })
+          {...formik.getFieldProps("lastName")}
+          error={formik.touched.lastName && formik.errors.lastName}
+          helperText={
+            formik.touched.lastName && formik.errors.lastName
+              ? formik.errors.lastName
+              : null
           }
         />
       </Stack>
       <TextField
+        id="email"
+        name="email"
         type="email"
         label="email id"
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         fullWidth
+        {...formik.getFieldProps("email")}
+        error={formik.touched.email && formik.errors.email}
+        helperText={
+          formik.touched.email && formik.errors.email
+            ? formik.errors.email
+            : null
+        }
       />
       <TextField
-        type={showPassword ? "text" : "password"}
         InputProps={{
           endAdornment: (
             <>
@@ -93,13 +110,20 @@ const RegisterPage = () => {
             </>
           ),
         }}
+        id="password"
+        name="password"
+        type={showPassword ? "text" : "password"}
         label="password"
-        value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         fullWidth
+        {...formik.getFieldProps("password")}
+        error={formik.touched.password && formik.errors.password}
+        helperText={
+          formik.touched.password && formik.errors.password
+            ? formik.errors.password
+            : null
+        }
       />
       <TextField
-        type={showConfirmPassword ? "text" : "password"}
         InputProps={{
           endAdornment: (
             <>
@@ -116,12 +140,18 @@ const RegisterPage = () => {
             </>
           ),
         }}
+        id="confirmPassword"
+        name="confirmPassword"
+        type={showConfirmPassword ? "text" : "password"}
         label="confirm password"
-        value={formData.confirmPassword}
-        onChange={(e) =>
-          setFormData({ ...formData, confirmPassword: e.target.value })
-        }
         fullWidth
+        {...formik.getFieldProps("confirmPassword")}
+        error={formik.touched.confirmPassword && formik.errors.confirmPassword}
+        helperText={
+          formik.touched.confirmPassword && formik.errors.confirmPassword
+            ? formik.errors.confirmPassword
+            : null
+        }
       />
       <Button variant="contained" type="submit">
         register

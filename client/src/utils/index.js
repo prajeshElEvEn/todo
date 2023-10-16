@@ -1,3 +1,3 @@
-import { instance } from "./axios";
+import { instance, authInstance, fileInstance } from "./axios/index";
 
-export { instance };
+export { instance, authInstance, fileInstance };

@@ -11,39 +11,48 @@ import {
 } from "@mui/material";
 import { Form } from "../../components/styled";
 import { Visibility, VisibilityOff } from "../../assets/icons";
+import { useFormik } from "formik";
+import { loginValidation } from "../../components/utils";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const onSubmit = (values) => {
+  console.log(values);
+};
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    setFormData({
-      email: "",
-      password: "",
-    });
-  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema: loginValidation,
+    onSubmit,
+  });
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={formik.handleSubmit}>
       <TextField
+        id="email"
+        name="email"
         type="email"
         label="email id"
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         fullWidth
+        {...formik.getFieldProps("email")}
+        error={formik.touched.email && formik.errors.email}
+        helperText={
+          formik.touched.email && formik.errors.email
+            ? formik.errors.email
+            : null
+        }
       />
       <TextField
-        type={showPassword ? "text" : "password"}
         InputProps={{
           endAdornment: (
             <>
@@ -60,10 +69,18 @@ const LoginPage = () => {
             </>
           ),
         }}
+        id="password"
+        name="password"
+        type={showPassword ? "text" : "password"}
         label="password"
-        value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         fullWidth
+        {...formik.getFieldProps("password")}
+        error={formik.touched.password && formik.errors.password}
+        helperText={
+          formik.touched.password && formik.errors.password
+            ? formik.errors.password
+            : null
+        }
       />
       <Stack direction={"row"} spacing={1}>
         <Link component={RouterLink} to="/auth/forgot">
