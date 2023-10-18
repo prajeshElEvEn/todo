@@ -16,14 +16,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (!firstName || !lastName || !email || !password) {
     res.status(400);
-    throw new Error("Please fill in all the fields");
+    throw new Error("fill in all the fields");
   }
 
   const userExists = await User.findOne({ email });
 
   if (userExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("user already exists");
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -38,14 +38,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400);
-    throw new Error("Registration failed");
+    throw new Error("registration failed");
   }
 
   const token = generateToken(user._id);
 
   if (!token) {
     res.status(500);
-    throw new Error("Token generation failed");
+    throw new Error("token generation failed");
   }
 
   res.status(201).json({ id: user._id, token });
@@ -59,14 +59,14 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (!email || !password) {
     res.status(400);
-    throw new Error("Please fill in all the fields");
+    throw new Error("please fill in all the fields");
   }
 
   const user = await User.findOne({ email });
 
   if (!user) {
     res.status(401);
-    throw new Error("Invalid credentials");
+    throw new Error("invalid credentials");
   }
 
   const passwordMatch = await bcrypt.compare(password, user.password);
@@ -111,9 +111,9 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   await user.save();
 
-  await sendResetEmail(user.email, resetToken);
+  const message = await sendResetEmail(user.email, resetToken);
 
-  res.status(200).json({ message: "Password reset email sent" });
+  res.status(200).json(message);
 });
 
 // @desc    Confirm reset password

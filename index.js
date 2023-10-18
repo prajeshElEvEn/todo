@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const { env, db, warn, log } = require("./server/utils");
+const { db, warn, log, loadEnv } = require("./server/utils");
 const constants = require("./constants");
 const { errorHandler } = require("./server/middlewares/errorMiddlewares");
 const { auth, user } = require("./server/routes");
 
-function startServer() {
-  const currentEnv = env();
+const startServer = () => {
+  const currentEnv = loadEnv();
   const port = process.env.PORT || 5000;
   const hostname = process.env.HOSTNAME || "127.0.0.1";
   const app = express();
@@ -26,6 +26,6 @@ function startServer() {
     await db();
     log(`Server running at http://${hostname}:${port}`);
   });
-}
+};
 
 startServer();

@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const loadEnv = require("../env");
+loadEnv();
+
 const {
   EMAIL_SERVICE,
   EMAIL_HOST,
@@ -25,14 +28,23 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const generateToken = (id) =>
-  jwt.sign({ id }, SECRET_KEY, { expiresIn: EXPIRY });
+const generateToken = (id) => {
+  return jwt.sign({ id }, SECRET_KEY, {
+    expiresIn: EXPIRY,
+  });
+};
 
-const generateResetToken = () => crypto.randomBytes(20).toString("hex");
+const generateResetToken = () => {
+  const token = crypto.randomBytes(20).toString("hex");
+  return token;
+};
 
 const sendResetEmail = async (email, resetToken) => {
   const mailOptions = {
-    from: { name: FROM_NAME, email: FROM_EMAIL },
+    from: {
+      name: FROM_NAME,
+      email: FROM_EMAIL,
+    },
     to: email,
     subject: "Password Reset Request",
     html: `<p>Hey there,</p><p>You requested to change your password.</p><p>Token: ${resetToken} </p><p>Use this token to reset your password.<p/>`,
@@ -40,13 +52,18 @@ const sendResetEmail = async (email, resetToken) => {
 
   try {
     await transporter.sendMail(mailOptions);
+    return { message: "email sent" };
   } catch (err) {
-    throw new Error({ message: "Could not send email", error: err });
+    console.log(err);
+    throw new Error("email could not be sent");
   }
 };
 
-const validateResetToken = (token, user) =>
-  token === user.resetPasswordToken && user.resetPasswordExpires > Date.now();
+const validateResetToken = (token, user) => {
+  return (
+    token === user.resetPasswordToken && user.resetPasswordExpires > Date.now()
+  );
+};
 
 module.exports = {
   generateToken,
