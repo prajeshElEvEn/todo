@@ -15,7 +15,7 @@ const registerService = async (userData) => {
 };
 
 const loginService = async (userData) => {
-  const response = await instance.post(URL + "login", userData);
+  const response = await instance.post(URL + "/login", userData);
 
   const id = response.data.id;
   const token = response.data.token;
@@ -33,14 +33,14 @@ const logoutService = async () => {
 };
 
 const resetPasswordService = async (userData) => {
-  const response = await instance.post(URL + "reset", userData);
+  const response = await instance.post(URL + "/reset", userData);
 
   return response.data;
 };
 
 const confirmResetPasswordService = async (userData) => {
   const response = await instance.post(
-    URL + "reset/" + userData.token,
+    URL + "/reset/" + userData.token,
     userData
   );
 

@@ -16,6 +16,7 @@ const initialState = {
   id: id ? id : null,
   token: token ? token : null,
   isLoading: false,
+  isError: false,
   message: "",
 };
 
@@ -36,7 +37,13 @@ export const login = createAsyncThunk(
     try {
       return await loginService(userData);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -79,6 +86,8 @@ export const authSlice = createSlice({
       state.status = false;
       state.id = null;
       state.token = null;
+      state.isLoading = false;
+      state.isError = false;
       state.message = "";
     },
   },
@@ -107,11 +116,14 @@ export const authSlice = createSlice({
         state.token = action.payload.token;
         state.id = action.payload.id;
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = false;
         state.token = null;
         state.id = null;
+        state.isLoading = false;
+        state.isError = true;
         state.message = action.payload;
       })
       .addCase(logout.pending, (state, action) => {

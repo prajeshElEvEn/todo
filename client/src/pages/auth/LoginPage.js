@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Button,
+  Alert,
   IconButton,
   InputAdornment,
   Link,
+  Snackbar,
   Stack,
   TextField,
   Typography,
@@ -13,17 +14,21 @@ import { Form } from "../../components/styled";
 import { Visibility, VisibilityOff } from "../../assets/icons";
 import { useFormik } from "formik";
 import { loginValidation } from "../../components/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { login, reset } from "../../features/auth/authSlice";
+import SubmitButton from "../../components/buttons/SubmitButton";
 
 const initialValues = {
   email: "",
   password: "",
 };
 
-const onSubmit = (values) => {
-  console.log(values);
-};
-
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -33,8 +38,24 @@ const LoginPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: loginValidation,
-    onSubmit,
+    onSubmit: async (values) => {
+      console.log(values);
+      await dispatch(login(values));
+    },
   });
+
+  useEffect(() => {
+    if (status) {
+      navigate("/");
+    }
+  }, [navigate, status]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(reset());
+  };
 
   return (
     <Form onSubmit={formik.handleSubmit}>
@@ -87,15 +108,18 @@ const LoginPage = () => {
           forgot password?
         </Link>
       </Stack>
-      <Button variant="contained" type="submit">
-        login
-      </Button>
+      <SubmitButton isLoading={isLoading} text={"login"} />
       <Stack direction={"row"} spacing={1}>
         <Typography color="text.secondary">don't have an account?</Typography>
         <Link component={RouterLink} to="/auth/register">
           register
         </Link>
       </Stack>
+      <Snackbar open={isError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Form>
   );
 };
