@@ -3,7 +3,7 @@ const cors = require("cors");
 const { db, warn, log, loadEnv } = require("./server/utils");
 const constants = require("./constants");
 const { errorHandler } = require("./server/middlewares/errorMiddlewares");
-const { auth, user } = require("./server/routes");
+const { auth, user, todo } = require("./server/routes");
 
 const startServer = () => {
   const currentEnv = loadEnv();
@@ -18,6 +18,7 @@ const startServer = () => {
 
   app.use("/api/auth", auth);
   app.use("/api/users", user);
+  app.use("/api/todos", todo);
 
   app.use(errorHandler);
 
