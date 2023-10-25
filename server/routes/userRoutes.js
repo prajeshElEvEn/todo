@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { checkAuth } = require("../middlewares/authMiddlewares");
+const { checkAuth, checkAdmin } = require("../middlewares/authMiddlewares");
 const {
   getUsers,
   getUser,
@@ -9,7 +9,7 @@ const {
 } = require("../controllers/userControllers");
 const { uploadAvatar } = require("../utils");
 
-router.route("/").get(checkAuth, getUsers);
+router.route("/").get(checkAuth, checkAdmin, getUsers);
 router.route("/profile/:id").get(checkAuth, getUser);
 router
   .route("/profile/:id/update")

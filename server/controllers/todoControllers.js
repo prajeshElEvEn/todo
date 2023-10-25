@@ -31,7 +31,8 @@ const getTodo = asyncHandler(async (req, res) => {
 // @route   POST /api/todos/
 // @access  Private
 const createTodo = asyncHandler(async (req, res) => {
-  const { title, author } = req.body;
+  const author = req.user.id;
+  const { title } = req.body;
 
   if (!title) {
     res.status(404);
@@ -89,13 +90,9 @@ const deleteTodo = asyncHandler(async (req, res) => {
     throw new Error("todo not found");
   }
 
-  if (title) {
-    poster.title = title;
-  }
+  await todo.deleteOne();
 
-  await poster.deleteOne();
-
-  res.status(204).json({ id: poster._id, message: "Poster deleted" });
+  res.status(204).json({ id: todo._id, message: "todo deleted" });
 });
 
 module.exports = {

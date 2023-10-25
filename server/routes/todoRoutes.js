@@ -15,7 +15,7 @@ router
   .get(checkAuth, checkAdmin, getTodos)
   .post(checkAuth, createTodo);
 
-router.route("/:userId").get(checkAuth, getUserTodos);
+router.route("/user/:userId").get(checkAuth, getUserTodos);
 
 router
   .route("/:id")
