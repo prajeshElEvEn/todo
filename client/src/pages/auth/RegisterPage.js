@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Form } from "../../components/styled";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Alert,
   Button,
   IconButton,
   InputAdornment,
   Link,
+  Snackbar,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "../../assets/icons";
 import { registerValidation } from "../../components/utils";
-import { register } from "../../features/auth/authSlice";
+import { register, reset } from "../../features/auth/authSlice";
 
 const initialValues = {
   firstName: "",
@@ -26,6 +28,10 @@ const initialValues = {
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -43,11 +49,24 @@ const RegisterPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: registerValidation,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
-      dispatch(register(values));
+      await dispatch(register(values));
     },
   });
+
+  useEffect(() => {
+    if (status) {
+      navigate("/");
+    }
+  }, [navigate, status]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(reset());
+  };
 
   return (
     <Form onSubmit={formik.handleSubmit}>
@@ -164,6 +183,11 @@ const RegisterPage = () => {
           login
         </Link>
       </Stack>
+      <Snackbar open={isError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Form>
   );
 };

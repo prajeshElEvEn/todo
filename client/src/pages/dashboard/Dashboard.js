@@ -1,10 +1,21 @@
 import { Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileCard from "../../components/cards/ProfileCard";
 import FormCard from "../../components/cards/FormCard";
 import CheckboxList from "../../components/lists/CheckboxList";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { status, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
+  useEffect(() => {
+    if (!status) {
+      navigate("/auth/login");
+    }
+  }, [navigate, status]);
   return (
     <Stack>
       <Grid

@@ -8,9 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { EditIcon } from "../../assets/icons";
+import { EditIcon, LogoutIcon } from "../../assets/icons";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 
 const ProfileCard = () => {
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    await dispatch(logout());
+  };
   return (
     <Card sx={{ display: "flex" }}>
       <CardMedia
@@ -35,6 +41,13 @@ const ProfileCard = () => {
         <CardActions>
           <Button variant="outlined" startIcon={<EditIcon />}>
             edit profile
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleLogout}
+            startIcon={<LogoutIcon />}
+          >
+            logout
           </Button>
         </CardActions>
       </Box>

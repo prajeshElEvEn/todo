@@ -26,7 +26,13 @@ export const register = createAsyncThunk(
     try {
       return await registerService(userData);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -52,7 +58,11 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     return await logoutService();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
 });
 
@@ -62,7 +72,13 @@ export const resetPassword = createAsyncThunk(
     try {
       return await resetPasswordService(userData);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -73,7 +89,13 @@ export const confirmResetPassword = createAsyncThunk(
     try {
       return await confirmResetPasswordService(userData);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -83,9 +105,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.status = false;
-      state.id = null;
-      state.token = null;
       state.isLoading = false;
       state.isError = false;
       state.message = "";
@@ -101,11 +120,14 @@ export const authSlice = createSlice({
         state.token = action.payload.token;
         state.id = action.payload.id;
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = false;
         state.token = null;
         state.id = null;
+        state.isLoading = false;
+        state.isError = true;
         state.message = action.payload;
       })
       .addCase(login.pending, (state, action) => {
@@ -134,28 +156,37 @@ export const authSlice = createSlice({
         state.token = null;
         state.id = null;
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
         state.message = action.payload;
       })
       .addCase(resetPassword.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
-        state.message = action.payload.message;
         state.isLoading = false;
+        state.isError = false;
+        state.message = action.payload;
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
         state.message = action.payload;
       })
       .addCase(confirmResetPassword.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(confirmResetPassword.fulfilled, (state, action) => {
-        state.message = action.payload.message;
+        state.isError = false;
         state.isLoading = false;
+        state.message = action.payload.message;
       })
       .addCase(confirmResetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
         state.message = action.payload;
       });
   },

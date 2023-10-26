@@ -5,6 +5,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import MailIcon from "@mui/icons-material/Mail";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export {
   AddIcon,
@@ -14,4 +15,5 @@ export {
   VisibilityOff,
   GitHubIcon,
   MailIcon,
+  LogoutIcon,
 };
