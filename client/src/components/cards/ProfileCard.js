@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -12,7 +13,7 @@ import { EditIcon, LogoutIcon } from "../../assets/icons";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 
-const ProfileCard = () => {
+const ProfileCard = ({ isLoading }) => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     await dispatch(logout());
@@ -47,7 +48,14 @@ const ProfileCard = () => {
             onClick={handleLogout}
             startIcon={<LogoutIcon />}
           >
-            logout
+            {
+              <>
+                {isLoading ? (
+                  <CircularProgress color="inherit" size={18} />
+                ) : null}
+                <>logout</>
+              </>
+            }
           </Button>
         </CardActions>
       </Box>

@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { status, isLoading, isError, message } = useSelector(
-    (state) => state.auth
-  );
+  const { status, isLoading } = useSelector((state) => state.auth);
   useEffect(() => {
     if (!status) {
       navigate("/auth/login");
@@ -30,7 +28,7 @@ const Dashboard = () => {
           <FormCard />
         </Grid>
         <Grid item xs={6}>
-          <ProfileCard />
+          <ProfileCard isLoading={isLoading} />
         </Grid>
       </Grid>
       <CheckboxList />

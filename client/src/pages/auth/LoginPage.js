@@ -39,7 +39,6 @@ const LoginPage = () => {
     initialValues,
     validationSchema: loginValidation,
     onSubmit: async (values) => {
-      console.log(values);
       await dispatch(login(values));
     },
   });

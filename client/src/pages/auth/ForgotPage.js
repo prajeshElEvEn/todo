@@ -8,15 +8,13 @@ const initialValues = {
   email: "",
 };
 
-const onSubmit = (values) => {
-  console.log(values);
-};
-
 const ForgotPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: forgotValidation,
-    onSubmit,
+    onSubmit: (values) => {
+      console.log(values);
+    },
   });
 
   return (
