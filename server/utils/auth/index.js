@@ -9,11 +9,10 @@ const {
   EMAIL_HOST,
   EMAIL_PORT,
   EMAIL_SECURE,
-  EMAIL_USER,
+  EMAIL_ID,
   EMAIL_PASS,
-  FROM_NAME,
-  FROM_EMAIL,
-  SECRET_KEY,
+  EMAIL_USER,
+  SECRET,
   EXPIRY,
 } = process.env;
 
@@ -23,13 +22,13 @@ const transporter = nodemailer.createTransport({
   port: EMAIL_PORT,
   secure: EMAIL_SECURE === "true",
   auth: {
-    user: EMAIL_USER,
+    user: EMAIL_ID,
     pass: EMAIL_PASS,
   },
 });
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, SECRET_KEY, {
+  return jwt.sign({ id }, SECRET, {
     expiresIn: EXPIRY,
   });
 };
@@ -42,8 +41,8 @@ const generateResetToken = () => {
 const sendResetEmail = async (email, resetToken) => {
   const mailOptions = {
     from: {
-      name: FROM_NAME,
-      email: FROM_EMAIL,
+      name: EMAIL_USER,
+      email: EMAIL_ID,
     },
     to: email,
     subject: "Password Reset Request",

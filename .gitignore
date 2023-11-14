@@ -4,6 +4,6 @@ uploads/*
 
 # files
 package-lock.json
-.env.production
-.env.development
+server/.env.pro
+server/.env.dev
 
