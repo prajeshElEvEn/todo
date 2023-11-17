@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const { db, warn, log, loadEnv } = require("./utils");
+const { db, warn, log, loadEnv } = require("./src/utils");
 const constants = require("./constants");
-const { errorHandler } = require("./middlewares/errorMiddlewares");
-const { auth, user, todo } = require("./routes");
+const { errorHandler } = require("./src/middlewares/errorMiddlewares");
+const { auth, user, todo } = require("./src/routes");
 
 const startServer = () => {
   const currentEnv = loadEnv();

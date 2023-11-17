@@ -1,7 +1,7 @@
 // multerStorage.js
 const multer = require("multer");
 const path = require("path");
-const constants = require("../../constants");
+const constants = require("../../../constants");
 
 const avatarStorage = multer.diskStorage({
   destination: (req, file, cb) => {
