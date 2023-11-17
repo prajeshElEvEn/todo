@@ -15,6 +15,11 @@ const Dashboard = () => {
   const handleLogout = async () => {
     await dispatch(logout());
   };
+
+  useEffect(() => {
+    // fetch user
+  }, []);
+
   useEffect(() => {
     if (!status) {
       navigate("/auth/login");
