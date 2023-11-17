@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
-  Button,
   IconButton,
   InputAdornment,
   Link,
@@ -17,6 +16,7 @@ import {
 import { Visibility, VisibilityOff } from "../../assets/icons";
 import { registerValidation } from "../../components/utils";
 import { register, reset } from "../../features/auth/authSlice";
+import SubmitButton from "../../components/buttons/SubmitButton";
 
 const initialValues = {
   firstName: "",
@@ -174,9 +174,7 @@ const RegisterPage = () => {
             : null
         }
       />
-      <Button variant="contained" type="submit">
-        register
-      </Button>
+      <SubmitButton isLoading={isLoading} text={"register"} />
       <Stack direction={"row"} spacing={1}>
         <Typography color="text.secondary">already have an account?</Typography>
         <Link component={RouterLink} to="/auth/login">

@@ -10,20 +10,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import { EditIcon, LogoutIcon } from "../../assets/icons";
-import { useDispatch } from "react-redux";
-import { logout } from "../../features/auth/authSlice";
 
-const ProfileCard = ({ isLoading }) => {
-  const dispatch = useDispatch();
-  const handleLogout = async () => {
-    await dispatch(logout());
-  };
+const ProfileCard = ({ handleLogout, isLoading }) => {
   return (
     <Card sx={{ display: "flex" }}>
       <CardMedia
         component="img"
         sx={{ width: 151 }}
-        image="/static/images/cards/live-from-space.jpg"
+        image="https://avatars.githubusercontent.com/u/75523737?s=400&u=933c15b722b4dd0f450a42ebdb33021c00d6cdac&v=4"
         alt="avatar"
       />
       <Box sx={{ display: "flex", flexDirection: "column" }}>

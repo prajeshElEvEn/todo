@@ -3,12 +3,18 @@ import React, { useEffect } from "react";
 import ProfileCard from "../../components/cards/ProfileCard";
 import FormCard from "../../components/cards/FormCard";
 import CheckboxList from "../../components/lists/CheckboxList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../features/auth/authSlice";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { status, isLoading } = useSelector((state) => state.auth);
+  const handleLogout = async () => {
+    await dispatch(logout());
+  };
   useEffect(() => {
     if (!status) {
       navigate("/auth/login");
@@ -28,7 +34,7 @@ const Dashboard = () => {
           <FormCard />
         </Grid>
         <Grid item xs={6}>
-          <ProfileCard isLoading={isLoading} />
+          <ProfileCard handleLogout={handleLogout} isLoading={isLoading} />
         </Grid>
       </Grid>
       <CheckboxList />
