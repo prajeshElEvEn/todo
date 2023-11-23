@@ -2,8 +2,8 @@ import Cookies from "js-cookie";
 import { instance } from "../../utils";
 const URL = "/auth";
 
-const registerService = async (userData) => {
-  const response = await instance.post(URL + "/register", userData);
+const registerService = async (formData) => {
+  const response = await instance.post(URL + "/register", formData);
 
   const id = response.data.id;
   const token = response.data.token;
@@ -14,8 +14,8 @@ const registerService = async (userData) => {
   return response.data;
 };
 
-const loginService = async (userData) => {
-  const response = await instance.post(URL + "/login", userData);
+const loginService = async (formData) => {
+  const response = await instance.post(URL + "/login", formData);
 
   const id = response.data.id;
   const token = response.data.token;
@@ -32,16 +32,16 @@ const logoutService = async () => {
   return;
 };
 
-const resetPasswordService = async (userData) => {
-  const response = await instance.post(URL + "/reset", userData);
+const resetPasswordService = async (formData) => {
+  const response = await instance.post(URL + "/reset", formData);
 
   return response.data;
 };
 
-const confirmResetPasswordService = async (userData) => {
+const confirmResetPasswordService = async (formData) => {
   const response = await instance.post(
-    URL + "/reset/" + userData.token,
-    userData
+    URL + "/reset/" + formData.token,
+    formData
   );
 
   return response.data;

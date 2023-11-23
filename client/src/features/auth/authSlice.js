@@ -22,9 +22,9 @@ const initialState = {
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (userData, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await registerService(userData);
+      return await registerService(formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -39,9 +39,9 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (userData, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await loginService(userData);
+      return await loginService(formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -68,9 +68,9 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
-  async (userData, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await resetPasswordService(userData);
+      return await resetPasswordService(formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -85,9 +85,9 @@ export const resetPassword = createAsyncThunk(
 
 export const confirmResetPassword = createAsyncThunk(
   "auth/confirmResetPassword",
-  async (userData, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await confirmResetPasswordService(userData);
+      return await confirmResetPasswordService(formData);
     } catch (error) {
       const message =
         (error.response &&
